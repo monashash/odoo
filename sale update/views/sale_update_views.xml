@@ -1,0 +1,56 @@
+<odoo>
+    <record id="view_sale_update_form" model="ir.ui.view">
+        <field name="name">sale.update.form</field>
+        <field name="model">sale.update</field>
+        <field name="arch" type="xml">
+            <form string="Sale Update">
+                <sheet>
+                    <header>
+                        <button name="action_confirm" string="Confirm" type="object" states="draft" class="btn-primary"/>
+                        <button name="action_done" string="Done" type="object" states="confirmed" class="btn-success"/>
+                        <button name="action_reset_to_draft" string="Reset to Draft" type="object" states="confirmed,done" class="btn-secondary"/>
+                    </header>
+                    <notebook>
+                        <page string="Page 1">
+                            <group>
+                                <field name="birth_date"/>
+                                <field name="age" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Page 2">
+                            <group>
+                                <field name="sale_id"/>
+                                <field name="state" readonly="1"/>  
+                                
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sale_update_tree" model="ir.ui.view">
+        <field name="name">sale.update.tree</field>
+        <field name="model">sale.update</field>
+        <field name="arch" type="xml">
+            <tree string="Sale Update">
+                <field name="sale_id"/>
+                <field name="state"/>
+                <field name="birth_date"/>
+                <field name="age"/>
+            </tree>
+        </field>
+    </record>
+
+    <menuitem id="menu_sale_update" name="Sale Updates" parent="sale.sale_order_menu" sequence="10"/>
+
+    <record id="action_sale_update" model="ir.actions.act_window">
+        <field name="name">Sale Updates</field>
+        <field name="res_model">sale.update</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_sale_update_tree"/>
+    </record>
+
+    <menuitem id="menu_action_sale_update" name="Sale Updates" parent="menu_sale_update" action="action_sale_update"/>
+</odoo>

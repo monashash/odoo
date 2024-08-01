@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_order_form_inherit" model="ir.ui.view">
+            <field name="name">sale.order.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                 <xpath expr="//header" position="inside">
+                    <button name="approval_first_level"
+                            string="first approval" type="object" 
+                            groups="sale_order.group_first_approval"/>
+
+                    <button name="approval_second_level"
+                            string="second approval" type="object"
+                            attrs="{'invisible': [('state', '!=', 'first_approval')]}"
+                            groups="sale_order.group_second_approval"/>
+
+                    <button name="approval_third_level"
+                            string="third approval"
+                            type="object"
+                            attrs="{'invisible': [('state', '!=', 'second_approval')]}"
+                            groups="sale_order.group_third_approval"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][1]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                
+                <xpath expr="//field[@name='state']" position="attributes">
+                    <attribute name="widget">statusbar</attribute>
+                    <attribute name="statusbar_visible">draft,sent,first_approval,second_approval,third_approval,sale,done,cancel</attribute>
+                </xpath>
+
+                
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="so_type"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>
